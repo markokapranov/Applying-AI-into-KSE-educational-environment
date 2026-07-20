@@ -44,34 +44,32 @@ class Student:
         else:
             self.usage = 1
         if (not config["usage"]) or self.usage == 0:
-            self.second_quiz = np.round((np.clip(
+            self.second_quiz = np.clip(np.round((np.clip(
                 rng.normal(loc=config["quiz_mean"], scale=config["quiz_sd"]) + 0.2 * self._ability, 0,
-                a_max=10).item()))
+                a_max=10).item()),0,10)
             if self._ability < q1 or self._ability > q2:
                 self.prep_time = 0
             else:
                 self.prep_time = (rng.lognormal(mean=config["prep_mean"], sigma=config[
                     "prep_sigma"]) - self.second_quiz * 0.15 - self._ability * 5)
-            self.final_grade = np.round(np.clip(rng.normal(loc=config["final_mean"], scale=config[
-                "final_sd"]) * 0.67 + 0.95 * self.second_quiz + self.prep_time * 0.035, 0, 30).item())
-            self.usage = 0
+            self.final_grade = np.clip(np.round(np.clip(rng.normal(loc=config["final_mean"], scale=config[
+                "final_sd"]) * 0.67 + 0.95 * self.second_quiz + self.prep_time * 0.035, 0, 30).item()),0,30)
         else:
 
 
             self.usage = rng.lognormal(mean=config["usage_mean"], sigma=config[
-                    "usage_sd"])
+                    "usage_sd"]) + self._ability *2
 
-            self.second_quiz = np.round((np.clip(
+            self.second_quiz = np.clip(np.round((np.clip(
                 rng.normal(loc=config["quiz_mean"], scale=config["quiz_sd"]) + 0.2 * self._ability, 0,
-                a_max=10).item()) + np.log(self.usage)/4)
+                a_max=10).item()) + np.log(self.usage)/4),0,10)
             if self._ability < q1 or self._ability > q2:
                 self.prep_time = 0
             else:
                 self.prep_time = self.usage + (rng.lognormal(mean=config["prep_mean"], sigma=config[
                     "prep_sigma"]) - self.second_quiz * 0.15 - self._ability * 5) * 0.067
-            self.final_grade = np.round(np.clip(rng.normal(loc=config["final_mean"], scale=config[
-                "final_sd"]) * 0.67 + 0.95 * self.second_quiz + (self.prep_time- self.usage) * 0.15 + self.usage * 0.036, 0, 30).item())
-
+            self.final_grade = np.clip(np.round(np.clip(rng.normal(loc=config["final_mean"], scale=config[
+                "final_sd"]) * 0.67 + 0.95 * self.second_quiz + (self.prep_time- self.usage) * 0.15 + self.usage * 0.036, 0, 30).item(
 
 
 
