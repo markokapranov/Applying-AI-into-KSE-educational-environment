@@ -46,7 +46,7 @@ class Student:
         if (not config["usage"]) or self.usage == 0:
             self.second_quiz = np.clip(np.round((np.clip(
                 rng.normal(loc=config["quiz_mean"], scale=config["quiz_sd"]) + 0.2 * self._ability, 0,
-                a_max=10).item()),0,10)
+                a_max=10).item())),0,10)
             if self._ability < q1 or self._ability > q2:
                 self.prep_time = 0
             else:
@@ -118,5 +118,3 @@ class Experiment:
         test_data["usage"] = [st.usage for st in students_obj_test]
         self.n_test = n_test
         self.test_data = test_data
-
-
