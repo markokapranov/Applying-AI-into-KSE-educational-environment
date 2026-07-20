@@ -69,7 +69,7 @@ class Student:
                 self.prep_time = self.usage + (rng.lognormal(mean=config["prep_mean"], sigma=config[
                     "prep_sigma"]) - self.second_quiz * 0.15 - self._ability * 5) * 0.067
             self.final_grade = np.clip(np.round(np.clip(rng.normal(loc=config["final_mean"], scale=config[
-                "final_sd"]) * 0.67 + 0.95 * self.second_quiz + (self.prep_time- self.usage) * 0.15 + self.usage * 0.036, 0, 30).item(
+                "final_sd"]) * 0.67 + 0.95 * self.second_quiz + (self.prep_time- self.usage) * 0.15 + self.usage * 0.036, 0, 30).item()), 0 , 30)
 
 
 
